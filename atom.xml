@@ -6,7 +6,7 @@
   <link href="https://swagger-coder.github.io/atom.xml" rel="self"/>
   
   <link href="https://swagger-coder.github.io/"/>
-  <updated>2022-05-01T11:27:46.064Z</updated>
+  <updated>2022-05-02T05:14:38.325Z</updated>
   <id>https://swagger-coder.github.io/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo图片无法正常加载</title>
+    <link href="https://swagger-coder.github.io/2022/05/02/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD/"/>
+    <id>https://swagger-coder.github.io/2022/05/02/hexo%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E5%8A%A0%E8%BD%BD/</id>
+    <published>2022-05-02T05:08:03.000Z</published>
+    <updated>2022-05-02T05:14:38.325Z</updated>
+    
+    <content type="html"><![CDATA[<p>本次通过以下几步使之正常加载</p><ul><li><p>配置<code>_config.yml</code>中 <code>post_asset_folder: true</code></p></li><li><p>安装<code>hexo-asset-image-for-hexo5</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image-for-hexo5 --save</span><br></pre></td></tr></table></figure><p>这次npm出现了网络问题，通过<code>npm config set proxy null</code>解决</p></li><li><p>使用markdown正常语法<code>![]()</code>插入图片即可</p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本次通过以下几步使之正常加载&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;配置&lt;code&gt;_config.yml&lt;/code&gt;中 &lt;code&gt;post_asset_folder: true&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装&lt;code&gt;hexo-asset-image</summary>
+      
+    
+    
+    
+    
+    <category term="hexo" scheme="https://swagger-coder.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>远程登录Ubuntu虚拟机</title>
+    <link href="https://swagger-coder.github.io/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    <id>https://swagger-coder.github.io/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/</id>
+    <published>2022-05-02T04:01:12.000Z</published>
+    <updated>2022-05-02T05:06:38.129Z</updated>
+    
+    <content type="html"><![CDATA[<p>鉴于大学生比较穷租不起服务器，平时可以在虚拟机上进行实验。</p><h2 id="虚拟机防火墙配置"><a href="#虚拟机防火墙配置" class="headerlink" title="虚拟机防火墙配置"></a>虚拟机防火墙配置</h2><ul><li><p>关闭防火墙</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure></li><li><p>查看是否安装ssh-server服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg -l | grep ssh</span><br></pre></td></tr></table></figure><div class="justified-gallery"><p><img src="/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/1.png"></p>          </div><p>这种情况是只装了默认的ssh-client</p><blockquote><p><code>SSH</code></p><ul><li>Secure Shell（安全外壳协议，简称SSH）是一种加密的网络传输协议，可在不安全的网络中为网络服务提供安全的传输环境。</li><li>SSH通过在网络中创建安全隧道来实现SSH客户端与服务器之间的连接。</li><li>SSH最常见的用途是远程登录系统，人们通常利用SSH来传输命令行界面和远程执行命令。SSH使用频率最高的场合是类Unix系统.<br>详情见<a href="https://zh.wikipedia.org/zh-cn/Secure_Shell">维基</a></li></ul></blockquote></li><li><p>（若未安装）安装ssh-server服务</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openssh-server</span><br><span class="line">$ dpkg -l | grep ssh <span class="comment">#上一步安装完成后</span></span><br></pre></td></tr></table></figure><p>若安装后如下所示，说明安装成功<br><img src="/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/2.png"></p></li><li><p>确认启动</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep ssh</span><br></pre></td></tr></table></figure><p><img src="/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/3.png"></p></li><li><p>查看虚拟机ip</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ip a</span><br></pre></td></tr></table></figure><p>或者直接在<code>wired setting</code>中查看即可<br><img src="/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/5.png"></p><h2 id="通过Xshell远程访问"><a href="#通过Xshell远程访问" class="headerlink" title="通过Xshell远程访问"></a>通过Xshell远程访问</h2></li><li><p>安装 <br></p><p>可以下载<a href="https://www.xshell.com/zh/free-for-home-school/">家庭/学校免费版</a>。</p></li><li><p>登录<br>只需要在下图主机部分填入虚拟机的ip，其他默认设置即可<br><img src="/2022/05/02/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Ubuntu%E8%99%9A%E6%8B%9F%E6%9C%BA/4.png"></p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;鉴于大学生比较穷租不起服务器，平时可以在虚拟机上进行实验。&lt;/p&gt;
+&lt;h2 id=&quot;虚拟机防火墙配置&quot;&gt;&lt;a href=&quot;#虚拟机防火墙配置&quot; class=&quot;headerlink&quot; title=&quot;虚拟机防火墙配置&quot;&gt;&lt;/a&gt;虚拟机防火墙配置&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;</summary>
+      
+    
+    
+    
+    
+    <category term="Linux" scheme="https://swagger-coder.github.io/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>awk命令详解</title>
