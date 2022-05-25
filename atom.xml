@@ -6,7 +6,7 @@
   <link href="https://swagger-coder.github.io/atom.xml" rel="self"/>
   
   <link href="https://swagger-coder.github.io/"/>
-  <updated>2022-05-25T01:35:49.970Z</updated>
+  <updated>2022-05-25T02:57:36.282Z</updated>
   <id>https://swagger-coder.github.io/</id>
   
   <author>
@@ -21,8 +21,15 @@
     <link href="https://swagger-coder.github.io/2022/05/25/STQA-%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://swagger-coder.github.io/2022/05/25/STQA-%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2022-05-25T01:35:49.000Z</published>
-    <updated>2022-05-25T01:35:49.970Z</updated>
+    <updated>2022-05-25T02:57:36.282Z</updated>
     
+    <content type="html"><![CDATA[<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>1.含mooctest插件的eclipse<br><br>2.jdk<br><br>3.Android SDK<br><br>4.Node.js<br><br>5.Appium<br><br>6.安卓模拟器（<a href="https://mumu.163.com/index.html">mumu</a>、雷电模拟器等）<br><br>7.判断所有环境配置成功<br></p><h2 id="脚本编写"><a href="#脚本编写" class="headerlink" title="脚本编写"></a>脚本编写</h2><h4 id="1-APP控件定位工具"><a href="#1-APP控件定位工具" class="headerlink" title="1. APP控件定位工具"></a>1. APP控件定位工具</h4><ul><li>打开安卓模拟器，<code>adb devices</code>测试手机是否与电脑连接（mumu<code>adb connect 127.0.0.1:7555</code>）</li><li>打开定位工具，我的安装目录在<code>C:\Program Files\android-sdk-windows\tools</code>，找到<code>uiautomatorviewer.bat</code>，即可截取手机屏幕，获取控件信息</li></ul><h4 id="2-控件定位方式"><a href="#2-控件定位方式" class="headerlink" title="2. 控件定位方式"></a>2. 控件定位方式</h4><ul><li>ById：有唯一resource-id<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.findElementById(&quot;com.alensw.PicFolder:id/search&quot;).click();</span><br><span class="line">driver.findElementById(&quot;com.alensw.PicFolder:id/search&quot;).sendKeys(&quot;hello&quot;);</span><br></pre></td></tr></table></figure></li><li>ByXPath：通过class+text/index/content-desc（推荐）获取<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver.findElementByXPath(&quot;//android.widget.TextView[@text=&#x27;相册&#x27;]&quot;).click();</span><br><span class="line">driver.findElementByXPath(&quot;//android.widget.EditText[@index=&#x27;0&#x27;]&quot;).click();</span><br><span class="line">driver.findElementByXPath(&quot;//android.widget.ImageButton[@content-desc=&#x27;向上导航&#x27;]&quot;).click();</span><br></pre></td></tr></table></figure></li></ul><h4 id="3-流程"><a href="#3-流程" class="headerlink" title="3. 流程"></a>3. 流程</h4><ul><li>打开模拟器，安装好apk</li><li>adb连接模拟器和电脑</li><li>打开Appium</li><li>打开APP控件定位工具</li><li>编写代码</li></ul><p>附上<a href="https://www.aliyundrive.com/s/PLwbADzoqc9">测试环境配置和脚本编写ppt</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;#环境准备&quot; class=&quot;headerlink&quot; title=&quot;环境准备&quot;&gt;&lt;/a&gt;环境准备&lt;/h2&gt;&lt;p&gt;1.含mooctest插件的eclipse&lt;br&gt;&lt;br&gt;2.jdk&lt;br&gt;&lt;br&gt;3.Android SDK&lt;br&gt;&lt;br</summary>
+      
     
     
     
