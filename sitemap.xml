@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://swagger-coder.github.io/2022/05/11/Python-virtualenv%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2022-06-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/</loc>
     
     <lastmod>2022-06-03</lastmod>
@@ -65,13 +72,6 @@
   </url>
   
   <url>
-    <loc>https://swagger-coder.github.io/2022/05/11/Python-virtualenv%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2022-05-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://swagger-coder.github.io/2022/05/07/ffmpeg/</loc>
     
     <lastmod>2022-05-08</lastmod>
@@ -130,14 +130,14 @@
 
   
   <url>
-    <loc>https://swagger-coder.github.io/tags/hexo/</loc>
+    <loc>https://swagger-coder.github.io/tags/Linux/</loc>
     <lastmod>2022-06-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://swagger-coder.github.io/tags/Linux/</loc>
+    <loc>https://swagger-coder.github.io/tags/hexo/</loc>
     <lastmod>2022-06-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
