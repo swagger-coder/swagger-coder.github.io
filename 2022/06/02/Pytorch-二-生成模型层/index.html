@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pytorch(二) 生成模型层 | 鳄鱼守卫</title><meta name="keywords" content="df sd"><meta name="author" content="Swagger Fei"><meta name="copyright" content="Swagger Fei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是神经网络神经网络是由层连接的神经元的集合。每个神经元都是一个小型计算单元，它执行简单的计算以共同解决一个问题。它们按层组织。有 3 种类型的层：输入层、隐藏层和外层。除输入层外，每一层都包含许多神经元。神经网络模仿人脑处理信息的方式 神经网络的组件 激活函数决定一个神经元是否应该被激活。神经网络中发生的计算包括应用激活函数。如果一个神经元被激活，那么这意味着输入很重要。有很多不同种类的激活函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch(二) 生成模型层">
+<meta property="og:url" content="https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/">
+<meta property="og:site_name" content="鳄鱼守卫">
+<meta property="og:description" content="什么是神经网络神经网络是由层连接的神经元的集合。每个神经元都是一个小型计算单元，它执行简单的计算以共同解决一个问题。它们按层组织。有 3 种类型的层：输入层、隐藏层和外层。除输入层外，每一层都包含许多神经元。神经网络模仿人脑处理信息的方式 神经网络的组件 激活函数决定一个神经元是否应该被激活。神经网络中发生的计算包括应用激活函数。如果一个神经元被激活，那么这意味着输入很重要。有很多不同种类的激活函">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://swagger-coder.github.io/img/3.png">
+<meta property="article:published_time" content="2022-06-02T12:51:50.000Z">
+<meta property="article:modified_time" content="2022-06-03T11:03:06.194Z">
+<meta property="article:author" content="Swagger Fei">
+<meta property="article:tag" content="df sd">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://swagger-coder.github.io/img/3.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Pytorch(二) 生成模型层',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-03 19:03:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="鳄鱼守卫" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 多媒体</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/3.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">鳄鱼守卫</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 多媒体</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Pytorch(二) 生成模型层</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-06-02T12:51:50.000Z" title="发表于 2022-06-02 20:51:50">2022-06-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-06-03T11:03:06.194Z" title="更新于 2022-06-03 19:03:06">2022-06-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Pytorch(二) 生成模型层"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="什么是神经网络"><a href="#什么是神经网络" class="headerlink" title="什么是神经网络"></a>什么是神经网络</h2><p>神经网络是由层连接的神经元的集合。每个神经元都是一个小型计算单元，它执行简单的计算以共同解决一个问题。它们按层组织。有 3 种类型的层：输入层、隐藏层和外层。除输入层外，每一层都包含许多神经元。神经网络模仿人脑处理信息的方式<br><img src="/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/4-model-1.png"></p>
+<h2 id="神经网络的组件"><a href="#神经网络的组件" class="headerlink" title="神经网络的组件"></a>神经网络的组件</h2><ul>
+<li><p>激活函数<br><br>决定一个神经元是否应该被激活。神经网络中发生的计算包括应用激活函数。如果一个神经元被激活，那么这意味着输入很重要。有很多不同种类的激活函数。使用哪个激活函数的选择取决于您想要的输出。激活函数的另一个重要作用是为模型添加非线性。</p>
+<ul>
+<li><code>Binary</code>：输出为正=1，输出为负=0</li>
+<li><code>Sigmoid</code>：预测可能性，值在(0,1)</li>
+<li><code>Tanh</code>：Tanh 用于预测输出节点是否介于 1 和 -1 之间。用于分类用例。</li>
+<li><code>ReLU</code>：ReLU 用于在函数结果为负时将输出节点设置为 0，如果结果为正值则保留结果值。</li>
+</ul>
+</li>
+<li><p>权重<br><br>权重会影响我们网络的输出与预期输出值的接近程度。当输入进入神经元时，它会乘以权重值，然后观察结果输出，或者将其传递到神经网络中的下一层。一层中所有神经元的权重被组织成一个张量。</p>
+</li>
+<li><p>偏差<br><br>偏差弥补了激活函数的输出与其预期输出之间的差异。低偏差表明网络对输出的形式做出了更多的假设，而高偏差值对输出的形式做出了较少的假设。</p>
+</li>
+</ul>
+<h2 id="构建神经网络"><a href="#构建神经网络" class="headerlink" title="构建神经网络"></a>构建神经网络</h2><p>神经网络由<code>layers/modules</code>组成，在pytorch中，所有的<code>module</code>需要继承<code>nn.Module</code>，一个神经网络本身也是组合了很多层的一个<code>module</code>。</p>
+<h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><p>我们通过子类化 <code>nn.Module</code> 来定义我们的神经网络，并在 <code>__init__</code> 中初始化神经网络层。每个 <code>nn.Module </code>子类都在 <code>forward</code> 方法中实现对输入数据的操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuralNetwork</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(NeuralNetwork, self).__init__()</span><br><span class="line">        <span class="comment"># 平面化(bs, a, b) -&gt; (bs, a*b)</span></span><br><span class="line">        self.flatten = nn.Flatten()</span><br><span class="line">        <span class="comment"># nn.Sequential是有序的模块容器</span></span><br><span class="line">        self.linear_relu_stack = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">512</span>),  <span class="comment"># 线性层</span></span><br><span class="line">            nn.ReLU(),  <span class="comment"># 激活函数</span></span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">10</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.flatten(x)</span><br><span class="line">        logits = self.linear_relu_stack(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"><span class="comment"># 应用模型</span></span><br><span class="line">X = torch.rand(<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, device=device)    <span class="comment"># input Size([1,28,28])</span></span><br><span class="line">logits = model(X)  <span class="comment"># output</span></span><br><span class="line">pred_probab = nn.Softmax(dim=<span class="number">1</span>)(logits) <span class="comment"># 激活函数，计算输出概率，仅用于输出层。dim 参数指示结果值总和必须为 1 的维度。</span></span><br><span class="line">y_pred = pred_probab.argmax(<span class="number">1</span>) <span class="comment"># 输出概率最高的节点</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Predicted class: <span class="subst">&#123;y_pred&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="模型参数"><a href="#模型参数" class="headerlink" title="模型参数"></a>模型参数</h2><h3 id="nn-linear"><a href="#nn-linear" class="headerlink" title="nn.linear"></a>nn.linear</h3><p>线性层会随机初始化<code>weights</code>和<code>bias</code>，并且在内部将值存储在张量中。<br><br>神经网络中的许多层都是参数化的，即具有在训练期间优化的相关权重和偏差。子类化 <code>nn.Module</code> 会自动跟踪模型对象中定义的所有字段，并使用模型的 <code>parameters()</code> 或 <code>named_pa​​rameters()</code> 方法使所有参数都可以访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Model structure: &quot;</span>, model, <span class="string">&quot;\n\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Layer: <span class="subst">&#123;name&#125;</span> | Size: <span class="subst">&#123;param.size()&#125;</span> | Values : <span class="subst">&#123;param[:<span class="number">2</span>]&#125;</span> \n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>教程来源：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/learn/paths/pytorch-fundamentals/">微软-pytorch基础知识</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Swagger Fei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/">https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://swagger-coder.github.io" target="_blank">鳄鱼守卫</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/"><img class="prev-cover" src="/img/5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python(三) 自动差异化和优化循环</div></div></a></div><div class="next-post pull-right"><a href="/2022/06/02/Pytorch-%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%A0%E9%87%8F%EF%BC%9F/"><img class="next-cover" src="/img/4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Pytorch(一) 什么是张量？</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Swagger Fei</div><div class="author-info__description">...</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">什么是神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">神经网络的组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">3.</span> <span class="toc-text">构建神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">定义类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">模型参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nn-linear"><span class="toc-number">4.1.</span> <span class="toc-text">nn.linear</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/" title="Python(三) 自动差异化和优化循环"><img src="/img/5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python(三) 自动差异化和优化循环"/></a><div class="content"><a class="title" href="/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/" title="Python(三) 自动差异化和优化循环">Python(三) 自动差异化和优化循环</a><time datetime="2022-06-03T07:00:20.000Z" title="发表于 2022-06-03 15:00:20">2022-06-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/" title="Pytorch(二) 生成模型层"><img src="/img/3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Pytorch(二) 生成模型层"/></a><div class="content"><a class="title" href="/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/" title="Pytorch(二) 生成模型层">Pytorch(二) 生成模型层</a><time datetime="2022-06-02T12:51:50.000Z" title="发表于 2022-06-02 20:51:50">2022-06-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/02/Pytorch-%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%A0%E9%87%8F%EF%BC%9F/" title="Pytorch(一) 什么是张量？"><img src="/img/4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Pytorch(一) 什么是张量？"/></a><div class="content"><a class="title" href="/2022/06/02/Pytorch-%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%A0%E9%87%8F%EF%BC%9F/" title="Pytorch(一) 什么是张量？">Pytorch(一) 什么是张量？</a><time datetime="2022-06-02T08:22:11.000Z" title="发表于 2022-06-02 16:22:11">2022-06-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/27/transformer-Preprocess/" title="transformer--Preprocess"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="transformer--Preprocess"/></a><div class="content"><a class="title" href="/2022/05/27/transformer-Preprocess/" title="transformer--Preprocess">transformer--Preprocess</a><time datetime="2022-05-27T06:13:36.000Z" title="发表于 2022-05-27 14:13:36">2022-05-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/" title="简历培训"><img src="/img/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="简历培训"/></a><div class="content"><a class="title" href="/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/" title="简历培训">简历培训</a><time datetime="2022-05-25T11:05:29.000Z" title="发表于 2022-05-25 19:05:29">2022-05-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By Swagger Fei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

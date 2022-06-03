@@ -6,7 +6,7 @@
   <link href="https://swagger-coder.github.io/atom.xml" rel="self"/>
   
   <link href="https://swagger-coder.github.io/"/>
-  <updated>2022-05-25T02:57:36.282Z</updated>
+  <updated>2022-06-03T11:02:35.358Z</updated>
   <id>https://swagger-coder.github.io/</id>
   
   <author>
@@ -15,6 +15,113 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python(三) 自动差异化和优化循环</title>
+    <link href="https://swagger-coder.github.io/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/"/>
+    <id>https://swagger-coder.github.io/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/</id>
+    <published>2022-06-03T07:00:20.000Z</published>
+    <updated>2022-06-03T11:02:35.358Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="自动差异化"><a href="#自动差异化" class="headerlink" title="自动差异化"></a>自动差异化</h2><p>在训练神经网络时，最常用的算法是反向传播。在该算法中，参数（模型权重）根据损失函数相对于给定参数（w、b）的梯度进行调整。损失函数计算神经网络产生的预期输出和实际输出之间的差异，目标是使损失函数的结果尽可能接近于零。<br>该算法通过网络向后遍历以调整权重和偏差以重新训练模型。这就是为什么它被称为反向传播。这种随着时间的推移重新训练模型以将损失减少到 0 的前后过程称为梯度下降。</p><p>在Pytorch中，这一过程将由<code>torch.autograd</code>自动完成。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="comment"># 通过给张量指定requires_grad=True表示需要梯度下降</span></span><br><span class="line">x = torch.ones(<span class="number">5</span>)  <span class="comment"># input tensor</span></span><br><span class="line">y = torch.zeros(<span class="number">3</span>)  <span class="comment"># expected output</span></span><br><span class="line">w = torch.randn(<span class="number">5</span>, <span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.randn(<span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">z = torch.matmul(x, w)+b <span class="comment"># 输出</span></span><br><span class="line">loss = torch.nn.functional.binary_cross_entropy_with_logits(z, y) <span class="comment"># 损失函数</span></span><br><span class="line"></span><br><span class="line">loss.backward() <span class="comment"># 计算梯度</span></span><br></pre></td></tr></table></figure><p>在调用<code>.backward()</code>后，<code>autograd</code>会填充一个新的图<br><img src="/2022/06/03/Python-%E4%B8%89-%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96/5-autograd-1.png"></p><h3 id="禁用梯度跟踪"><a href="#禁用梯度跟踪" class="headerlink" title="禁用梯度跟踪"></a>禁用梯度跟踪</h3><p>通过<code>torch.no_grad()</code>停用梯度跟踪</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">z = torch.matmul(x, w)+b</span><br><span class="line"><span class="built_in">print</span>(z.requires_grad) <span class="comment"># true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    z = torch.matmul(x, w)+b</span><br><span class="line"><span class="built_in">print</span>(z.requires_grad) <span class="comment"># false</span></span><br></pre></td></tr></table></figure><h2 id="优化循环"><a href="#优化循环" class="headerlink" title="优化循环"></a>优化循环</h2><h3 id="设置超参数-hyperparameters"><a href="#设置超参数-hyperparameters" class="headerlink" title="设置超参数(hyperparameters)"></a>设置超参数(hyperparameters)</h3><ul><li>epoch</li><li>batch size</li><li>learning rate</li></ul><h3 id="添加优化循环-optimization-loop"><a href="#添加优化循环-optimization-loop" class="headerlink" title="添加优化循环(optimization loop)"></a>添加优化循环(optimization loop)</h3><p>训练将由<code>epoch</code>构成，每个<code>epoch</code>都包含<code>train loop</code>和<code>validation loop</code>。</p><h3 id="添加损失函数"><a href="#添加损失函数" class="headerlink" title="添加损失函数"></a>添加损失函数</h3><p>计算实际输出和预期之间的相异程度</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss_fn = nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure><h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>优化器将决定如何来调整模型参数，提高准确率。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)</span><br></pre></td></tr></table></figure><p>在训练循环中，优化器主要有三大作用：</p><ul><li>调用<code>optimizer.zero_grad()</code>重置模型参数的梯度矩阵（归零），梯度在默认情况下会相加。</li><li>通过调用<code>loss.backwards()</code>反向传播预测损失，Pytorch会存储每个参数的梯度。</li><li>通过调用<code>optimizer.step()</code>依据反向传播收集的梯度调整参数。<h3 id="保存模型"><a href="#保存模型" class="headerlink" title="保存模型"></a>保存模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), <span class="string">&quot;data/model.pth&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Saved PyTorch Model State to model.pth&quot;</span>)</span><br></pre></td></tr></table></figure></li></ul><p>后续的加载模型和预测没什么概念性的知识，微软的教程写的真的很清晰，有时间建议自己手敲一遍，一般实操中也就在模型上会有不同。<br>教程来源：<a href="https://docs.microsoft.com/zh-cn/learn/paths/pytorch-fundamentals/">微软-pytorch基础知识</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;自动差异化&quot;&gt;&lt;a href=&quot;#自动差异化&quot; class=&quot;headerlink&quot; title=&quot;自动差异化&quot;&gt;&lt;/a&gt;自动差异化&lt;/h2&gt;&lt;p&gt;在训练神经网络时，最常用的算法是反向传播。在该算法中，参数（模型权重）根据损失函数相对于给定参数（w、b）的梯度进行</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Pytorch(二) 生成模型层</title>
+    <link href="https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/"/>
+    <id>https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/</id>
+    <published>2022-06-02T12:51:50.000Z</published>
+    <updated>2022-06-03T11:03:06.194Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是神经网络"><a href="#什么是神经网络" class="headerlink" title="什么是神经网络"></a>什么是神经网络</h2><p>神经网络是由层连接的神经元的集合。每个神经元都是一个小型计算单元，它执行简单的计算以共同解决一个问题。它们按层组织。有 3 种类型的层：输入层、隐藏层和外层。除输入层外，每一层都包含许多神经元。神经网络模仿人脑处理信息的方式<br><img src="/2022/06/02/Pytorch-%E4%BA%8C-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%B1%82/4-model-1.png"></p><h2 id="神经网络的组件"><a href="#神经网络的组件" class="headerlink" title="神经网络的组件"></a>神经网络的组件</h2><ul><li><p>激活函数<br><br>决定一个神经元是否应该被激活。神经网络中发生的计算包括应用激活函数。如果一个神经元被激活，那么这意味着输入很重要。有很多不同种类的激活函数。使用哪个激活函数的选择取决于您想要的输出。激活函数的另一个重要作用是为模型添加非线性。</p><ul><li><code>Binary</code>：输出为正=1，输出为负=0</li><li><code>Sigmoid</code>：预测可能性，值在(0,1)</li><li><code>Tanh</code>：Tanh 用于预测输出节点是否介于 1 和 -1 之间。用于分类用例。</li><li><code>ReLU</code>：ReLU 用于在函数结果为负时将输出节点设置为 0，如果结果为正值则保留结果值。</li></ul></li><li><p>权重<br><br>权重会影响我们网络的输出与预期输出值的接近程度。当输入进入神经元时，它会乘以权重值，然后观察结果输出，或者将其传递到神经网络中的下一层。一层中所有神经元的权重被组织成一个张量。</p></li><li><p>偏差<br><br>偏差弥补了激活函数的输出与其预期输出之间的差异。低偏差表明网络对输出的形式做出了更多的假设，而高偏差值对输出的形式做出了较少的假设。</p></li></ul><h2 id="构建神经网络"><a href="#构建神经网络" class="headerlink" title="构建神经网络"></a>构建神经网络</h2><p>神经网络由<code>layers/modules</code>组成，在pytorch中，所有的<code>module</code>需要继承<code>nn.Module</code>，一个神经网络本身也是组合了很多层的一个<code>module</code>。</p><h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><p>我们通过子类化 <code>nn.Module</code> 来定义我们的神经网络，并在 <code>__init__</code> 中初始化神经网络层。每个 <code>nn.Module </code>子类都在 <code>forward</code> 方法中实现对输入数据的操作。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuralNetwork</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(NeuralNetwork, self).__init__()</span><br><span class="line">        <span class="comment"># 平面化(bs, a, b) -&gt; (bs, a*b)</span></span><br><span class="line">        self.flatten = nn.Flatten()</span><br><span class="line">        <span class="comment"># nn.Sequential是有序的模块容器</span></span><br><span class="line">        self.linear_relu_stack = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">512</span>),  <span class="comment"># 线性层</span></span><br><span class="line">            nn.ReLU(),  <span class="comment"># 激活函数</span></span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">10</span>),</span><br><span class="line">            nn.ReLU()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.flatten(x)</span><br><span class="line">        logits = self.linear_relu_stack(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"><span class="comment"># 应用模型</span></span><br><span class="line">X = torch.rand(<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, device=device)    <span class="comment"># input Size([1,28,28])</span></span><br><span class="line">logits = model(X)  <span class="comment"># output</span></span><br><span class="line">pred_probab = nn.Softmax(dim=<span class="number">1</span>)(logits) <span class="comment"># 激活函数，计算输出概率，仅用于输出层。dim 参数指示结果值总和必须为 1 的维度。</span></span><br><span class="line">y_pred = pred_probab.argmax(<span class="number">1</span>) <span class="comment"># 输出概率最高的节点</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Predicted class: <span class="subst">&#123;y_pred&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure><h2 id="模型参数"><a href="#模型参数" class="headerlink" title="模型参数"></a>模型参数</h2><h3 id="nn-linear"><a href="#nn-linear" class="headerlink" title="nn.linear"></a>nn.linear</h3><p>线性层会随机初始化<code>weights</code>和<code>bias</code>，并且在内部将值存储在张量中。<br><br>神经网络中的许多层都是参数化的，即具有在训练期间优化的相关权重和偏差。子类化 <code>nn.Module</code> 会自动跟踪模型对象中定义的所有字段，并使用模型的 <code>parameters()</code> 或 <code>named_pa​​rameters()</code> 方法使所有参数都可以访问。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Model structure: &quot;</span>, model, <span class="string">&quot;\n\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Layer: <span class="subst">&#123;name&#125;</span> | Size: <span class="subst">&#123;param.size()&#125;</span> | Values : <span class="subst">&#123;param[:<span class="number">2</span>]&#125;</span> \n&quot;</span>)</span><br></pre></td></tr></table></figure><p>教程来源：<a href="https://docs.microsoft.com/zh-cn/learn/paths/pytorch-fundamentals/">微软-pytorch基础知识</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;什么是神经网络&quot;&gt;&lt;a href=&quot;#什么是神经网络&quot; class=&quot;headerlink&quot; title=&quot;什么是神经网络&quot;&gt;&lt;/a&gt;什么是神经网络&lt;/h2&gt;&lt;p&gt;神经网络是由层连接的神经元的集合。每个神经元都是一个小型计算单元，它执行简单的计算以共同解决一个问题</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Pytorch(一) 什么是张量？</title>
+    <link href="https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%A0%E9%87%8F%EF%BC%9F/"/>
+    <id>https://swagger-coder.github.io/2022/06/02/Pytorch-%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%A0%E9%87%8F%EF%BC%9F/</id>
+    <published>2022-06-02T08:22:11.000Z</published>
+    <updated>2022-06-03T11:02:41.136Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul><li>python</li><li>线性代数</li><li>numpy</li></ul><h2 id="初始化张量"><a href="#初始化张量" class="headerlink" title="初始化张量"></a>初始化张量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.直接从数据</span></span><br><span class="line">data = [[<span class="number">1</span>, <span class="number">2</span>],[<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line">x_data = torch.tensor(data)</span><br><span class="line"><span class="comment"># 2.从numpy数组</span></span><br><span class="line">np_array = np.array(data)</span><br><span class="line">x_np = torch.from_numpy(np_array)</span><br><span class="line"><span class="comment"># 3.从另一个tensor</span></span><br><span class="line">x_ones = torch.ones_like(x_data) <span class="comment"># 保留原张量大小和数据类型</span></span><br><span class="line">x_rand = torch.rand_like(x_data, dtype=torch.long) <span class="comment"># 改变数据类型</span></span><br><span class="line"><span class="comment"># 4.具有随机或恒定值</span></span><br><span class="line">shape = (<span class="number">2</span>,<span class="number">3</span>,) <span class="comment"># tensor的维度</span></span><br><span class="line">rand_tensor = torch.rand(shape) <span class="comment"># 0-1之间</span></span><br><span class="line">ones_tensor = torch.ones(shape) <span class="comment"># 全1</span></span><br><span class="line">zeros_tensor = torch.zeros(shape) <span class="comment"># 全0</span></span><br><span class="line">rand_tensor = torch.rand(<span class="number">3</span>, <span class="number">4</span>) <span class="comment"># size[3,4] datatype: torch.float32</span></span><br></pre></td></tr></table></figure><h2 id="张量的属性"><a href="#张量的属性" class="headerlink" title="张量的属性"></a>张量的属性</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensor = torch.rand(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">tensor.shape <span class="comment"># torch.Size([3, 4])</span></span><br><span class="line">tensor.dtype <span class="comment"># torch.float32</span></span><br></pre></td></tr></table></figure><h2 id="张量的操作"><a href="#张量的操作" class="headerlink" title="张量的操作"></a>张量的操作</h2><h3 id="类似numpy的索引和切片"><a href="#类似numpy的索引和切片" class="headerlink" title="类似numpy的索引和切片"></a>类似numpy的索引和切片</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tensor = torch.ones(<span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line">tensor[<span class="number">0</span>] <span class="comment"># First row</span></span><br><span class="line">tensor[:, <span class="number">0</span>] <span class="comment"># First column</span></span><br><span class="line">tensor[..., -<span class="number">1</span>] <span class="comment"># Last column</span></span><br><span class="line">tensor[:,<span class="number">1</span>] = <span class="number">0</span> <span class="comment"># 第1列设为0</span></span><br></pre></td></tr></table></figure><h3 id="tensor拼接"><a href="#tensor拼接" class="headerlink" title="tensor拼接"></a>tensor拼接</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t1 = torch.cat([tensor, tensor, tensor], dim=<span class="number">1</span>) <span class="comment"># dim=1按列拼接，行数不变；dim=0按行拼接，列数不变</span></span><br></pre></td></tr></table></figure><h3 id="算数运算"><a href="#算数运算" class="headerlink" title="算数运算"></a>算数运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This computes the matrix multiplication between two tensors. y1, y2, y3 will have the same value 矩阵乘法</span></span><br><span class="line">y1 = tensor @ tensor.T</span><br><span class="line">y2 = tensor.matmul(tensor.T)</span><br><span class="line"></span><br><span class="line">y3 = torch.rand_like(tensor)</span><br><span class="line">torch.matmul(tensor, tensor.T, out=y3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This computes the element-wise product. z1, z2, z3 will have the same value 对应位置元素相乘</span></span><br><span class="line">z1 = tensor * tensor</span><br><span class="line">z2 = tensor.mul(tensor)</span><br><span class="line"></span><br><span class="line">z3 = torch.rand_like(tensor)</span><br><span class="line">torch.mul(tensor, tensor, out=z3)</span><br></pre></td></tr></table></figure><h3 id="原地操作"><a href="#原地操作" class="headerlink" title="原地操作"></a>原地操作</h3><p>不鼓励使用</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有元素加5</span></span><br><span class="line">tensor.add_(<span class="number">5</span>)</span><br></pre></td></tr></table></figure><p>教程来源：<a href="https://docs.microsoft.com/zh-cn/learn/paths/pytorch-fundamentals/">微软-pytorch基础知识</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前置知识&quot;&gt;&lt;a href=&quot;#前置知识&quot; class=&quot;headerlink&quot; title=&quot;前置知识&quot;&gt;&lt;/a&gt;前置知识&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;python&lt;/li&gt;
+&lt;li&gt;线性代数&lt;/li&gt;
+&lt;li&gt;numpy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;初</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>transformer--Preprocess</title>
+    <link href="https://swagger-coder.github.io/2022/05/27/transformer-Preprocess/"/>
+    <id>https://swagger-coder.github.io/2022/05/27/transformer-Preprocess/</id>
+    <published>2022-05-27T06:13:36.000Z</published>
+    <updated>2022-06-02T08:22:38.414Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>在把数据放入模型之前，先要进行预处理，将文本、图像、音频转换为模型能够处理的张量。</p><h2 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h2><p>在NLP中，最常用的预处理工具是<code>tokenizer</code>(分词器)，分词器就是将句子分割成词，然后将词按照词典对应到唯一的数字。首先搞清楚<code>tokenizer</code>的输入和输出：<br></p><ul><li><code>input</code>：单个文本，多个文本或文本列表。需要注意文本列表返回的张量会改变维度</li><li><code>output</code>：包含<code>input_ids</code>、<code>attention_mask</code>、<code>token_type_ids</code>的字典<ul><li><code>input_ids</code>：句子中每个词对应的索引</li><li><code>attention_mask</code>：指示信息的有用性（填充的为0）</li><li><code>token_type_ids</code>：多个句子时指示索引属于哪个句子</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;预处理&quot;&gt;&lt;a href=&quot;#预处理&quot; class=&quot;headerlink&quot; title=&quot;预处理&quot;&gt;&lt;/a&gt;预处理&lt;/h2&gt;&lt;p&gt;在把数据放入模型之前，先要进行预处理，将文本、图像、音频转换为模型能够处理的张量。&lt;/p&gt;
+&lt;h2 id=&quot;NLP&quot;&gt;&lt;a href</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>简历培训</title>
+    <link href="https://swagger-coder.github.io/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/"/>
+    <id>https://swagger-coder.github.io/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/</id>
+    <published>2022-05-25T11:05:29.000Z</published>
+    <updated>2022-05-25T16:00:13.352Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="好简历背后的逻辑"><a href="#好简历背后的逻辑" class="headerlink" title="好简历背后的逻辑"></a>好简历背后的逻辑</h2><p>专属、定位、精准</p><h4 id="亮点突出"><a href="#亮点突出" class="headerlink" title="亮点突出"></a>亮点突出</h4><p>岗位导向、结果导向、权重导向<br><br>就个人而言，先要选择好岗位（研发or管理等）<br><img src="/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/1.png"></p><h4 id="细节支撑"><a href="#细节支撑" class="headerlink" title="细节支撑"></a>细节支撑</h4><ul><li>时间</li><li>地点</li><li>人物</li><li>事件</li><li>数据<br>要写实打实的，可以经得住拷问<br><br><img src="/2022/05/25/%E7%AE%80%E5%8E%86%E5%9F%B9%E8%AE%AD/2.png"></li></ul><h4 id="格式整洁"><a href="#格式整洁" class="headerlink" title="格式整洁"></a>格式整洁</h4><p>精简、详略得当</p><h4 id="真实可信"><a href="#真实可信" class="headerlink" title="真实可信"></a>真实可信</h4><p>可包装不能浮夸</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;好简历背后的逻辑&quot;&gt;&lt;a href=&quot;#好简历背后的逻辑&quot; class=&quot;headerlink&quot; title=&quot;好简历背后的逻辑&quot;&gt;&lt;/a&gt;好简历背后的逻辑&lt;/h2&gt;&lt;p&gt;专属、定位、精准&lt;/p&gt;
+&lt;h4 id=&quot;亮点突出&quot;&gt;&lt;a href=&quot;#亮点突出&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>STQA 移动应用测试学习笔记</title>
@@ -41,9 +148,9 @@
     <link href="https://swagger-coder.github.io/2022/05/23/%E5%BE%AE%E4%BF%A1%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://swagger-coder.github.io/2022/05/23/%E5%BE%AE%E4%BF%A1%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2022-05-23T14:25:28.000Z</published>
-    <updated>2022-05-24T17:14:22.153Z</updated>
+    <updated>2022-06-02T08:22:34.655Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="一些常识"><a href="#一些常识" class="headerlink" title="一些常识"></a>一些常识</h2><ul><li>mask<br><br>是相对于PAD而产生的技术，只有0和1两个值，0表示的值对应PAD矩阵中对应位置的值无意义。<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><img src="/2022/05/23/%E5%BE%AE%E4%BF%A1%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.png"><br>想要有好的结果，首先要对数据进行预处理，可以看到，有用信息就是String类型：title，asr，ocr和float类型：frames_feature</li></ul><p>tokenizer就是分词器</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul><li>什么是预训练模型（hfl/chinese-macbert-base）</li><li>什么是对抗</li><li>ema？指数滑动平均</li><li>怎么换模型，chinese-roberta-wwm-ext</li><li>fgm<br><br><a href="https://github.com/rsanshierli/Bert-Classification-EMA-AD/blob/master/FGM.py">https://github.com/rsanshierli/Bert-Classification-EMA-AD/blob/master/FGM.py</a></li></ul><h2 id="tricks"><a href="#tricks" class="headerlink" title="tricks"></a>tricks</h2><ul><li>对抗</li><li>ema</li><li>fgm</li><li></li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="一些常识"><a href="#一些常识" class="headerlink" title="一些常识"></a>一些常识</h2><ul><li>mask<br><br>是相对于PAD而产生的技术，只有0和1两个值，0表示的值对应PAD矩阵中对应位置的值无意义。<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><img src="/2022/05/23/%E5%BE%AE%E4%BF%A1%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.png"><br>想要有好的结果，首先要对数据进行预处理，可以看到，有用信息就是String类型：title，asr，ocr和float类型：frames_feature</li></ul><p>tokenizer就是分词器</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul><li>什么是预训练模型（hfl/chinese-macbert-base）</li><li>什么是对抗</li><li>ema？指数滑动平均</li><li>怎么换模型，chinese-roberta-wwm-ext</li><li>fgm<br><br><a href="https://github.com/rsanshierli/Bert-Classification-EMA-AD/blob/master/FGM.py">https://github.com/rsanshierli/Bert-Classification-EMA-AD/blob/master/FGM.py</a></li></ul><h2 id="tricks"><a href="#tricks" class="headerlink" title="tricks"></a>tricks</h2><ul><li>对抗</li><li>ema</li><li>fgm</li><li>学习率更新</li></ul><h2 id="一些小坑"><a href="#一些小坑" class="headerlink" title="一些小坑"></a>一些小坑</h2><ul><li>线上线下分数差距大<br><br>原因是验证集划分不均，和训练集相似度过高</li></ul>]]></content>
     
     
       
