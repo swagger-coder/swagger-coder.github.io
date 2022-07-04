@@ -6,7 +6,7 @@
   <link href="https://swagger-coder.github.io/atom.xml" rel="self"/>
   
   <link href="https://swagger-coder.github.io/"/>
-  <updated>2022-06-15T13:14:47.224Z</updated>
+  <updated>2022-07-04T09:04:48.623Z</updated>
   <id>https://swagger-coder.github.io/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>what is lean manufacturing?</title>
+    <link href="https://swagger-coder.github.io/2022/07/04/what-is-lean-manufacturing/"/>
+    <id>https://swagger-coder.github.io/2022/07/04/what-is-lean-manufacturing/</id>
+    <published>2022-07-04T08:11:03.000Z</published>
+    <updated>2022-07-04T09:04:48.623Z</updated>
+    
+    <content type="html"><![CDATA[<p>KIT第一天学习任务，了解什么是精益生产。概念上理解很简单，一言以蔽之，精益生产就是以用户价值为核心，减少浪费，提高收益。但其中有很多原则和概念需要记忆，因此简单整理笔记加深自己记忆，更多內容可以查看<br><a href="https://www.leanproduction.com/essence-of-lean/">Essence of Lean – Eliminating Waste (Muda) | Lean Production</a>。</p><p><img src="/2022/07/04/what-is-lean-manufacturing/lean.png"></p><h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><ul><li>a methodology(方法论) that focuses on minimizing waste within manufacturing system while simultaneously(同时) maximizing productivity.</li><li>Lean manufacturing is a production method aimed primarily at reducing times within the production system as well as response times from suppliers and to customers.</li><li>The core idea of lean manufacturing is quite simple: relentlessly work on eliminating waste from the manufacturing process.</li></ul><h2 id="five-lean-principles"><a href="#five-lean-principles" class="headerlink" title="five lean principles"></a>five lean principles</h2><ul><li><p><strong>Identify and Define Value：</strong> Look at your process from the perspective of your <strong>customers</strong> and identify what they deem valuable(从客户视角审视生产过程，并搞清楚他们严重的价值所在)<br><strong>how to ?</strong> just identify</p><ul><li>what customer really want</li><li>what is customer willing to pay for</li><li>what does customer perceive as valuable</li></ul></li><li><p><strong>Map the Value Stream:</strong> Distinguish steps and activities in the process that provide value from those that create waste</p><p>how to?<br>ask three questions: </p><ul><li>Does this step, and its activities, bring value to the customer? </li><li>move your product or service downstream towards the customer</li><li>flow smoothly, without impediments(阻碍), within the context of the value stream?</li></ul><p>and a step can be categorized into <strong>three levels</strong>: add value, create necessary waste, create unnecessary waste</p></li><li><p><strong>Create Smooth Flow:</strong> Streamline(精简) the process to be free of bottlenecks and delays</p><p>how to?</p><ul><li>reduce changover times</li><li>avoid batch operations(使流程清晰)</li><li>organize equipment(工具与流程相符)</li></ul></li><li><p><strong>Pull based on customer demand:</strong> Align to customer <strong>demand</strong> and adjust quickly to changes in that demand（抓住客户需求，快速迭代需求）</p></li><li><p><strong>Strive for Perfection:</strong> Promote an internal culture of continuous improvement and excellence(精益求精，形成公司文化) </p></li></ul><p>The five lean principles are an iterative process that will bring further value as they are repeated</p><h2 id="seven-delay-wastes"><a href="#seven-delay-wastes" class="headerlink" title="seven delay wastes"></a><strong>seven delay wastes</strong></h2><ul><li><p>overprocduction（超产）</p><ul><li>making something before it is truly needed</li></ul></li><li><p>waiting</p></li><li><p>transport</p><ul><li>物资的无意义移动</li></ul></li><li><p>motion</p><ul><li>人员的无意义移动</li></ul></li><li><p>inventory（存货）</p><ul><li><p>Product (raw materials, work-in-process, or finished goods) quantities that go beyond supporting the immediate need.</p></li><li><p>vs overprocduction</p></li></ul></li><li><p>overprocessing</p></li><li><p>defects</p></li></ul><h2 id="an-eight-delay-waste"><a href="#an-eight-delay-waste" class="headerlink" title="an eight delay waste"></a><strong>an eight delay waste</strong></h2><ul><li>unused human potential</li><li>reasons<ul><li>responsibility lies squrely(直接) on the shoulders of management</li><li>management policies and management styles that diminish(减少) employee contributions</li></ul></li><li>countermeasure<ul><li>developing strong coaching skills for managers</li></ul></li></ul><h2 id="25-tools"><a href="#25-tools" class="headerlink" title="25 tools"></a>25 tools</h2><p><a href="https://www.leanproduction.com/top-25-lean-tools/">top-25-lean-tools</a></p><ul><li>5s</li><li>andon</li><li><strong>Jidoka</strong>(自动化)</li><li>Just-In-Time (JIT)</li><li>PDCA(Plan, Do, Check, Act)<br><br>……</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;KIT第一天学习任务，了解什么是精益生产。概念上理解很简单，一言以蔽之，精益生产就是以用户价值为核心，减少浪费，提高收益。但其中有很多原则和概念需要记忆，因此简单整理笔记加深自己记忆，更多內容可以查看&lt;br&gt;&lt;a href=&quot;https://www.leanproducti</summary>
+      
+    
+    
+    
+    
+    <category term="lean" scheme="https://swagger-coder.github.io/tags/lean/"/>
+    
+    <category term="KIT" scheme="https://swagger-coder.github.io/tags/KIT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vue-element-admin+django 前后端交互</title>
+    <link href="https://swagger-coder.github.io/2022/06/20/vue-element-admin-django-%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/"/>
+    <id>https://swagger-coder.github.io/2022/06/20/vue-element-admin-django-%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/</id>
+    <published>2022-06-20T13:54:12.000Z</published>
+    <updated>2022-06-20T13:54:12.681Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Linux期末复习</title>
