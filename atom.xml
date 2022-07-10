@@ -6,7 +6,7 @@
   <link href="https://swagger-coder.github.io/atom.xml" rel="self"/>
   
   <link href="https://swagger-coder.github.io/"/>
-  <updated>2022-07-04T09:04:48.623Z</updated>
+  <updated>2022-07-10T02:29:37.287Z</updated>
   <id>https://swagger-coder.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>软件杯-智能创作平台赛题总结</title>
+    <link href="https://swagger-coder.github.io/2022/07/09/%E8%BD%AF%E4%BB%B6%E6%9D%AF-%E6%99%BA%E8%83%BD%E5%88%9B%E4%BD%9C%E5%B9%B3%E5%8F%B0%E8%B5%9B%E9%A2%98%E6%80%BB%E7%BB%93/"/>
+    <id>https://swagger-coder.github.io/2022/07/09/%E8%BD%AF%E4%BB%B6%E6%9D%AF-%E6%99%BA%E8%83%BD%E5%88%9B%E4%BD%9C%E5%B9%B3%E5%8F%B0%E8%B5%9B%E9%A2%98%E6%80%BB%E7%BB%93/</id>
+    <published>2022-07-09T03:39:42.000Z</published>
+    <updated>2022-07-10T02:29:37.287Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="赛题简介"><a href="#赛题简介" class="headerlink" title="赛题简介"></a>赛题简介</h2><p><a href="http://www.cnsoftbei.com/plus/view.php?aid=729">A9-智能创作平台</a><br><br>根据赛题，我在进行需求分析后得到以下几个功能点</p><ul><li>单文本处理<ul><li>文本输入</li><li>标题生成</li><li>摘要生成</li><li>结果显示</li></ul></li><li>多文本批量处理<ul><li>文件上传</li><li>标题生成</li><li>摘要生成</li><li>文件下载</li></ul></li><li>系统参数配置<ul><li>中英文切换</li><li>生成参数配置</li></ul></li></ul><p>我的预期是想做成<code>ilovePDF</code>类似的工具型网站，于是索性不做登陆注册了。因此这个网站的架构就非常简单了，不需要用到数据库，当然如果要做历史记录查看还是需要的。</p><h2 id="技术路线"><a href="#技术路线" class="headerlink" title="技术路线"></a>技术路线</h2><p><img src="/2022/07/09/%E8%BD%AF%E4%BB%B6%E6%9D%AF-%E6%99%BA%E8%83%BD%E5%88%9B%E4%BD%9C%E5%B9%B3%E5%8F%B0%E8%B5%9B%E9%A2%98%E6%80%BB%E7%BB%93/1.png"><br>项目最后是成功完成了，但作为cv工程师，我只是代码的搬运工罢了。</p><ul><li>streamlit开发文档<a href="https://docs.streamlit.io/">Docs</a></li><li>开发的整体思路借鉴<a href="https://link.zhihu.com/?target=https://github.com/liucongg/GPT2-NewsTitle">超详细中文注释的GPT2新闻标题生成项目</a></li><li>文件上传下载功能借鉴<a href="https://github.com/streamlit/example-app-csv-wrangler">✂️ CSV Wrangler</a></li><li>摘要抽取算法<a href="https://github.com/ArtistScript/FastTextRank">FastTextRank</a>或<a href="https://github.com/letiantian/TextRank4ZH">TextRank4ZH</a></li><li>文本生成模型<a href="https://github.com/ZhuiyiTechnology/WoBERT">WoBERT</a>（rouge评测结果很好）</li></ul><h2 id="反思总结"><a href="#反思总结" class="headerlink" title="反思总结"></a>反思总结</h2><ul><li><p>技术路线选择</p><ul><li>由于自己没有人工智能基础，导致文本生成模型一开始只能依赖现成的项目，结果就是<code>rouge</code>评测效果很差</li><li>知道模型不行之后还想着从头学，导致自己渐渐被技术吓到，其实正确思路还是找现成的模型，能尽快使用</li><li>教训就是在做之前需要对现有的模型算法有整体的了解，并一开就就要做好多方面比较的准备，选取最优方案</li></ul></li><li><p>环境配置</p><ul><li><p>环境配置和开发的时间感觉都快五五分了，通过本次比赛自己对环境方面也算是踩坑有得了</p></li><li><p>首先是<code>pytorch</code>、<code>tensorflow</code>使用<code>win</code>下<code>gpu</code>，不同版本的需对应不同<code>cuda</code>版本</p><ul><li><code>torch 1.10.1 + transfoemers 3.0.2 + cuda 11.3</code></li><li><code>bert4keras 0.8.8 + tensorflow 2.1.0 + Keras 2.3.1 + cuda 10.1</code></li></ul></li><li><p>虚拟环境也需要注意了，使用<code>pycharm</code>管理一定要把虚拟环境名改成不一样的。这里我已经不推荐使用<code>pycharm</code>进行管理了，还是直接用<code>virtualenv</code>或<code>conda</code>比较靠谱</p></li><li><p>被<code>win</code>坑的，早日转<code>Linux</code></p></li></ul></li><li><p>复用</p><ul><li>这次项目里的<code>rouge</code>评测之后可以一直用</li><li><code>streamlit</code>方面的组件，如<code>.csv</code>文件的上传下载</li></ul></li><li><p>后续任务</p><ul><li>看下文本生成方面的综述，研究下主流的方法，并自己实验比较</li><li>自己搭建一个文本生成的模型，考虑用<code>keras</code>，从代码量来说，这个真的很香</li><li>网站架构方面，如果用<code>Java</code>框架，将怎么与<code>python</code>的代码融合？是时候进修下<code>Java web</code>了。</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;赛题简介&quot;&gt;&lt;a href=&quot;#赛题简介&quot; class=&quot;headerlink&quot; title=&quot;赛题简介&quot;&gt;&lt;/a&gt;赛题简介&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnsoftbei.com/plus/view.php?aid=729&quot;&gt;A9-智能</summary>
+      
+    
+    
+    
+    
+    <category term="项目总结" scheme="https://swagger-coder.github.io/tags/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
+    
+    <category term="streamlit" scheme="https://swagger-coder.github.io/tags/streamlit/"/>
+    
+    <category term="文本生成" scheme="https://swagger-coder.github.io/tags/%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90/"/>
+    
+  </entry>
   
   <entry>
     <title>what is lean manufacturing?</title>
@@ -420,29 +446,6 @@
     <summary type="html">&lt;p&gt;鉴于大学生比较穷租不起服务器，平时可以在虚拟机上进行实验。&lt;/p&gt;
 &lt;h2 id=&quot;虚拟机防火墙配置&quot;&gt;&lt;a href=&quot;#虚拟机防火墙配置&quot; class=&quot;headerlink&quot; title=&quot;虚拟机防火墙配置&quot;&gt;&lt;/a&gt;虚拟机防火墙配置&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;</summary>
-      
-    
-    
-    
-    
-    <category term="Linux" scheme="https://swagger-coder.github.io/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>awk命令详解</title>
-    <link href="https://swagger-coder.github.io/2022/04/30/awk%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"/>
-    <id>https://swagger-coder.github.io/2022/04/30/awk%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</id>
-    <published>2022-04-30T13:40:01.000Z</published>
-    <updated>2022-05-01T11:27:46.064Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>grep</code>、<code>awk</code>、<code>sed</code>作为<code>Linux</code>三剑客，在文本处理方面有着极为重要的地位。本文将通过实例介绍<code>awk</code>的常用场景。</p><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>以下是<code>awk</code>运行的语法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">&#x27;BEGIN&#123;&#125; [pattern]&#123;&#125; END&#123;&#125;&#x27;</span> file</span><br><span class="line">或 </span><br><span class="line">awk [选项参数] -f scriptfile file</span><br></pre></td></tr></table></figure><p><code>awk</code>脚本语法解释：<code>BEGIN&#123;&#125;</code>和<code>END&#123;&#125;</code>语句块分别只会在运行开始、运行结束时执行，也就是整个过程运行一次；而<code>[pattern]&#123;&#125;</code> 会对每一行匹配执行。</p><h3 id="选项参数说明"><a href="#选项参数说明" class="headerlink" title="选项参数说明"></a>选项参数说明</h3><table><thead><tr><th align="center">参数</th><th align="center">作用</th></tr></thead><tbody><tr><td align="center"><strong>-F fs</strong></td><td align="center">指定输入文件的分隔符，如-F : ，默认为空格</td></tr><tr><td align="center">-f scriptfile</td><td align="center">从脚本中读取awk命令</td></tr><tr><td align="center">-v var=value</td><td align="center">赋值一个用户定义变量</td></tr></tbody></table><p>这几个参数较常用，其他可见菜鸟教程 <a href="https://www.runoob.com/linux/linux-comm-awk.html">Linux awk 命令</a></p><blockquote><p>栗子1</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;1:2:4&quot;</span> | awk -F : <span class="string">&#x27;BEGIN&#123;print &quot;result:&quot;&#125; $3 &gt; 3 &#123;print $1+$2&#125; END&#123;print &quot;end&quot;&#125;&#x27;</span> <span class="comment">#输出3 </span></span><br></pre></td></tr></table></figure><h2 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h2><p><code>awk</code>的一些内置变量能方便我们获取文本的信息，以下给出一些常见的内置变量。</p><table><thead><tr><th align="center">变量</th><th align="center">描述</th></tr></thead><tbody><tr><td align="center">$n</td><td align="center">当前记录的第n个字段</td></tr><tr><td align="center">$0</td><td align="center">当前行完整的记录</td></tr><tr><td align="center">NF</td><td align="center">当前行内的字段数量</td></tr><tr><td align="center">NR</td><td align="center">已经读出的记录数，也就是当前行号</td></tr><tr><td align="center">NF</td><td align="center">赋值一个用户定义变量</td></tr></tbody></table><blockquote><p>栗子2</p></blockquote><p>test1.txt中存有以下內容：<br><br>Besh  4.00  0 <br><br>Dan   3.75  0<br><br>Kathy 4.00  10<br><br>Mark  5.00  20<br><br>Mary  5.50  22<br><br>Susie 4.25  18<br></p><ul><li><p>当第3列大于0时，输出文本中对应行的第 1 列和第 2 列与第 3 列之积</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;$3 &gt; 0 &#123;print $1, $2 * $3 &#125;&#x27;</span> ./test1.txt</span><br></pre></td></tr></table></figure></li><li><p>统计第 3 列大于 15 的行数，记为 X，并以下列格式输出 “X employees worked more than 15 hours.”</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123;X=0&#125; $3 &gt; 15 &#123;X=X + 1&#125; END &#123; print X,&quot; employees worked more than 15 hours&quot;&#125;&#x27;</span> ./test1.txt</span><br></pre></td></tr></table></figure></li><li><p>使用特殊变量 NR、NF，统计输出整个文本的行数、单词数和字符数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># scriptfile</span></span><br><span class="line">&#123; nc = nc + length(<span class="variable">$0</span>) + 1</span><br><span class="line">  nw = nw + NF</span><br><span class="line">&#125;</span><br><span class="line">END &#123;<span class="built_in">print</span> NR, <span class="string">&quot;lines&quot;</span>, nw, <span class="string">&quot;words&quot;</span>, nc, <span class="string">&quot;characters&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># bash</span></span><br><span class="line">awk -f scriptfile ./test1.txt</span><br></pre></td></tr></table></figure></li></ul><h2 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h2><p><code>awk</code>还提供了一些内置函数，方便对原始数据的处理，这里将结合例子给出具体用法。</p><h3 id="index-String1-String2"><a href="#index-String1-String2" class="headerlink" title="index(String1, String2)"></a>index(String1, String2)</h3><p><strong>参数说明</strong>：在<code>String1</code>中查找<code>String2</code>，返回<code>String2</code>出现的位置，从 1 开始编号。如果 <code>String2</code> 参数不在 <code>String1</code> 参数中出现，则返回 0（零）。</p><blockquote><p>栗子3</p></blockquote><p>使用 awk 统计/etc/passwd 文件中，登陆 shell 为“/sbin/nologin”的用户个数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 若登录shell不为/sbin/nologin，index()返回0，不执行 user = user + 1</span></span><br><span class="line">awk <span class="string">&#x27;index($0, &quot;/sbin/nologin&quot;) &#123;user = user + 1&#125; END &#123;print user, &quot; users login shell is /sbin/nologin&quot;&#125;&#x27;</span> ./passwd</span><br></pre></td></tr></table></figure><p><strong>其他说明：</strong><code>/etc/psaawd</code>是Linux关键安全文件之一。Linux操作系统中所有的用户账户记录都在该文件中。具体格式为：<code>username:password:uid:gid:userinfo:home:shell</code></p><h3 id="split-String-arr-Ere"><a href="#split-String-arr-Ere" class="headerlink" title="split(String, arr, [Ere])"></a>split(String, arr, [Ere])</h3><p><strong>参数说明：</strong> 将<code>String</code>按照<code>Ere</code>分隔后存入数组<code>arr</code></p><blockquote><p>栗子4</p></blockquote><p>使用 awk 统计/etc/passwd 文件中，用户名包含’g’的用户，打印出用户名和 UID</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每一行按照&quot;:&quot;分隔，通过索引访问元素</span></span><br><span class="line"><span class="comment"># arr[1]为username，arr[3]为uid</span></span><br><span class="line">awk <span class="string">&#x27;&#123;split($0, arr, &quot;:&quot;); if (index(arr[1], &quot;g&quot;)) print &quot;username: &quot;, arr[1], &quot; uid: &quot;, arr[3]&#125;&#x27;</span> ./passwd</span><br></pre></td></tr></table></figure><p>其他常用的函数如下：</p><ul><li><code>tolower()</code>：字符转为小写。</li><li><code>toupper()</code>：字符转为大写。</li><li><code>length()</code>：返回字符串长度。</li><li><code>substr()</code>：返回子字符串。</li><li><code>sin()</code>：正弦。</li><li><code>cos()</code>：余弦。</li><li><code>sqrt()</code>：平方根。</li><li><code>rand()</code>：随机数。</li></ul><p><code>awk</code>内置函数的完整列表，可以查看<a href="https://www.gnu.org/software/gawk/manual/html_node/Built_002din.html#Built_002din">手册</a>或<a href="https://www.runoob.com/w3cnote/awk-built-in-functions.html#b2">菜鸟教程</a></p><h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><p><code>awk</code>提供了<code>if</code>结构，在上面的栗子中已经有所涉及，这里在补充一下<code>else</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;if ($1 &gt; &quot;m&quot;) print $1; else print &quot;---&quot;&#125;&#x27;</span> demo.txt</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;code&gt;grep&lt;/code&gt;、&lt;code&gt;awk&lt;/code&gt;、&lt;code&gt;sed&lt;/code&gt;作为&lt;code&gt;Linux&lt;/code&gt;三剑客，在文本处理方面有着极为重要的地位。本文将通过实例介绍&lt;code&gt;awk&lt;/code&gt;的常用场景。&lt;/p&gt;
-&lt;h2 id=&quot;语</summary>
       
     
     
